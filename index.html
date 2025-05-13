@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF=8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> Cardápio Yama</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+    <header style="position: fixed; top: 0; left: 0; width: 100%; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000;"> <!-- Aqui eu deixei o header fixo no top -->
         <h1> Cardápio Yama</h1>
     </header>
 
-    <main id="menu-container">
+    <main id="menu-container" style="padding-top: 100px;"> <!-- Por conta do header fixo no top, tive que criar um espaço para o header não ficar na frente do conteúdo -->
 
     </main>
 
@@ -21,11 +21,15 @@
     <label>
       Nome Completo:
       <input type="text" id="nome-cliente" required />
-    </label><br><br>
+    </label><br>
+    <br> 
+    <textarea id="observacoes-cliente" placeholder="Observações (opcional)" rows="3" required type="text"></textarea>
     <button onclick="confirmarPedido()">Confirmar Pedido</button>
     <button onclick="fecharModal()" style="margin-left: 10px;">Cancelar</button>
   </div>
 </div>
+  <div id="fundo1" class="bg"></div>
+  <div id="fundo2" class="bg"></div>
 
     <script src="script.js"></script>
 </body>

@@ -2,16 +2,41 @@
 const menu = [
   {
     nome: "Hot roll",
-    descricao: "Arroz, salmão grelado, cream chesse, cebolinha, gergelim.",
+    descricao: "Arroz, salmão grelhado, cream cheese, cebolinha, gergelim.",
     preco: 32,
     imagem: "hotroll.jpg" //imagem local
   },
   {
-    nome: "Temaki grelhado",
-    descricao: "Arroz, alga 'nori', salmão grelhado, cream chesse, cebolinha, gergelim. ",
+    nome: "Temaki salmão grelhado",
+    descricao: "Arroz, salmão grelhado, cream cheese, cebolinha, gergelim. ",
     preco: 32,
     imagem: "temakigrelhado.jpg" //imagem local
-}
+  },
+  {
+    nome: "Temaki salmão cru",
+    descricao: "Arroz, salmão cru, cream cheese, cabolinha, gergelim",
+    preco: 32,
+    imagem: "temakicru.jpg"  //imagem local
+  },
+  {
+    nome: "Combinado 1",
+    descricao: "",
+    preco: 45,
+    imagem: ""
+  },
+  {
+    nome: "Combinado 2",
+    descricao: "",
+    preco: 45,
+    imagem: ""
+  },
+  {
+    nome: "Combinado 3",
+    descricao: "",
+    preco: 45,
+    imagem: ""
+  },
+
 ];
 
 const container = document.getElementById("menu-container");
@@ -28,7 +53,7 @@ menu.forEach((item, index) => {
       <p>${item.descricao}</p>
       <strong>R$ ${item.preco.toFixed(2)}</strong><br>
       <label>Qtd:
-        <input type="number" min="1" value="1" id="qtd-${index}">
+        <input type="number" min="1" max="20" value="1" id="qtd-${index}">
       </label>
       <button onclick="adicionarPedido(${index})">Adicionar ao pedido</button>
     </div>
@@ -47,7 +72,10 @@ function adicionarPedido(index) {
   const item = menu[index];
   const qtd = parseInt(document.getElementById(`qtd-${index}`).value);
 
-  if (qtd <= 0 || isNaN(qtd)) return;
+  if (isNaN(qtd) || qtd < 1 || qtd > 20) {
+    alert("Quantidade inválida. Insira um valor entre 1 e 20");
+    return;
+  }
 
   carrinho.push({ nome: item.nome, preco: item.preco, quantidade: qtd });
   atualizarResumo();
@@ -95,31 +123,70 @@ function fecharModal() {
 function confirmarPedido() {
   const nome = document.getElementById("nome-cliente").value.trim();
 
-  if (nome === "") {
-    alert("Por favor, preencha todos os campos.");
+  if (!nome) {
+    alert("Por favor, preencha seu nome.");
     return;
   }
 
-  let mensagem = `🧾 Pedido de ${nome}:\n\n`;
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio.");
+    return;
+  }
+
+  let mensagem = `🧾 *Pedido de ${nome}*\n\n`;
   let total = 0;
 
   carrinho.forEach(item => {
     const subtotal = item.preco * item.quantidade;
-    mensagem += `${item.quantidade}x ${item.nome} – R$ ${subtotal.toFixed(2)}\n`;
+    mensagem += `🍽️ ${item.quantidade}x ${item.nome} — R$ ${subtotal.toFixed(2)}\n`;
     total += subtotal;
   });
 
-  mensagem += `\nTotal: R$ ${total.toFixed(2)}\n\nPedido confirmado! Obrigado!`;
+  mensagem += `\n💰 *Total:* R$ ${total.toFixed(2)}`;
+  mensagem += `\n\n✅ Pedido gerado via cardápio digital. Um atendente já irá lhe atender. 😉`;
 
-    // ENVIAR VIA WHATSAPP
-  const telefone = "5515991669521"; // Substitua pelo número do restaurante
-  const textoCodificado = encodeURIComponent(mensagem);
-  const linkZap = `https://wa.me/${telefone}?text=${textoCodificado}`;
-  
-  alert(mensagem);
+  const telefone = "5515991669521";
+  const texto = encodeURIComponent(mensagem);
+  const linkZap = `https://wa.me/${telefone}?text=${texto}`;
 
-  // Limpa
+  window.open(linkZap, "_blank");
+
+  // Limpa o carrinho após enviar
   carrinho.length = 0;
   atualizarResumo();
   fecharModal();
 }
+
+const imagens = [
+  'hotroll.jpg',
+  'temakigrelhado.jpg',
+  'temakicru.jpg'
+]; // Adiciona as imagens para gerar a transição de imagem na tela de fundo
+
+let index = 0;
+let ativo = true;
+
+const fundo1 = document.getElementById("fundo1");
+const fundo2 = document.getElementById("fundo2");
+
+// Define a primeira imagem
+fundo1.style.backgroundImage = `url('${imagens[0]}')`;
+
+function trocarFundo() {
+  index = (index + 1) % imagens.length;
+  const novaImagem = `url('${imagens[index]}')`;
+
+  if (ativo) {
+    fundo2.style.backgroundImage = novaImagem;
+    fundo2.style.opacity = 1;
+    fundo1.style.opacity = 0;
+  } else {
+    fundo1.style.backgroundImage = novaImagem;
+    fundo1.style.opacity = 1;
+    fundo2.style.opacity = 0;
+  }
+
+  ativo = !ativo;
+}
+
+setInterval(trocarFundo, 4000); // troca a cada 4 segundos

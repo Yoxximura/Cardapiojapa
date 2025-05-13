@@ -2,11 +2,15 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #fff8f0;
+  background-color: #000;
+  /* background-image: colocar tal imagem com 'imagem.jpg'. Como deixei essa parte no java, não precisou*/
+  background-size: cover;        /* A imagem cobre toda a tela */
+  background-position: center;   /* Centraliza a imagem */
+  background-repeat: no-repeat;  /* Não repete a imagem */
 }
 
 header {
-  background-color: #d35400;
+  background-color: #FF0000;
   color: white;
   padding: 20px;
   text-align: center;
@@ -45,12 +49,12 @@ header {
 
 .card-content h3 {
   margin: 0;
-  color: #d35400;
+  color: #000;
 }
 
 .card-content p {
   margin: 5px 0;
-  color: #555;
+  color: #FF0000;
 }
 
 .card-content strong {
@@ -68,7 +72,7 @@ header {
 .card button {
   margin-top: 10px;
   padding: 8px 12px;
-  background-color: #d35400;
+  background-color: #FF0000;
   color: white;
   border: none;
   border-radius: 5px;
@@ -146,4 +150,45 @@ header {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
+}
+
+textarea {
+  width: 100%;          /* Largura total da tela */
+  height: auto;        /* Altura total da tela */
+  box-sizing: border-box; /* Inclui padding e border dentro da largura e altura */
+  font-size: 16px;      /* Tamanho da fonte */
+  padding: 10px;        /* Espaçamento interno */
+  border: 1px solid #ccc; /* Borda */
+  font-family: Arial, sans-serif;
+}
+
+input {
+  width: 100%;          /* Largura total da tela */
+  height: auto;        /* Altura total da tela */
+  box-sizing: border-box; /* Inclui padding e border dentro da largura e altura */
+  font-size: 16px;      /* Tamanho da fonte */
+  padding: 10px;        /* Espaçamento interno */
+  border: 1px solid #ccc; /* Borda */
+  font-family: Arial, sans-serif;
+}
+
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 2s ease-in-out;
+  z-index: -1;
+}
+
+#fundo1 {
+  opacity: 1;
+}
+
+#fundo2 {
+  opacity: 0;
 }
